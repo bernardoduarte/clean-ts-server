@@ -1,4 +1,5 @@
 import { FileListUsers } from '@/data/usecases';
+import { throwError } from 'test/domain/mocks/test-helpers';
 import { ListUsersRepositorySpy } from '../mocks';
 
 type SutTypes = {
@@ -30,5 +31,16 @@ describe('FileListUsers', () => {
     const output = await sut.listUsers();
 
     expect(output).toBe(listUsersRepositorySpy.output);
+  });
+
+  test('Should throw if ListUsersRepository throws', async () => {
+    const { sut, listUsersRepositorySpy } = makeSut();
+    jest
+      .spyOn(listUsersRepositorySpy, 'listUsers')
+      .mockImplementationOnce(throwError);
+
+    const promise = sut.listUsers();
+
+    await expect(promise).rejects.toThrow();
   });
 });
