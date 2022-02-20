@@ -1,6 +1,6 @@
-import { ListUsers } from 'src/domain/usecases';
-import { mockListUsersOutput } from 'src/domain/usecases/mocks';
-import { ListUsersRepository } from '..';
+import { ListUsers } from '@/domain/usecases';
+import { ListUsersRepository } from '@/data/protocols';
+import { mockListUsersOutput } from 'test/domain/mocks';
 
 export class ListUsersRepositorySpy implements ListUsersRepository {
   output: ListUsers.Output = mockListUsersOutput();

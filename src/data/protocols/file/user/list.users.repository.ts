@@ -1,4 +1,4 @@
-import { ListUsers } from 'src/domain/usecases';
+import { ListUsers } from '@/domain/usecases';
 
 export interface ListUsersRepository {
   listUsers: () => Promise<ListUsersRepository.Output>;
