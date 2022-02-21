@@ -1,5 +1,5 @@
 import { ListUsersController } from '@/presentation/controllers';
-import { ok } from '@/presentation/helpers';
+import { noContent, ok } from '@/presentation/helpers';
 import { ListUsersSpy } from '../mocks';
 
 type SutTypes = {
@@ -27,7 +27,18 @@ describe('ListUsersController', () => {
 
   test('Should return 200 on success', async () => {
     const { sut, listUsersSpy } = makeSut();
+
     const httpResponse = await sut.handle();
+
     expect(httpResponse).toEqual(ok(listUsersSpy.output));
+  });
+
+  test('Should return 204 if ListUsers returns empty', async () => {
+    const { sut, listUsersSpy } = makeSut();
+    listUsersSpy.output = [];
+
+    const httpResponse = await sut.handle();
+
+    expect(httpResponse).toEqual(noContent());
   });
 });
