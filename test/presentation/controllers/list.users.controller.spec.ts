@@ -1,5 +1,6 @@
 import { ListUsersController } from '@/presentation/controllers';
-import { noContent, ok } from '@/presentation/helpers';
+import { noContent, ok, serverError } from '@/presentation/helpers';
+import { throwError } from 'test/domain/mocks/test-helpers';
 import { ListUsersSpy } from '../mocks';
 
 type SutTypes = {
@@ -40,5 +41,14 @@ describe('ListUsersController', () => {
     const httpResponse = await sut.handle();
 
     expect(httpResponse).toEqual(noContent());
+  });
+
+  test('Should return 500 if ListUsers throws', async () => {
+    const { sut, listUsersSpy } = makeSut();
+    jest.spyOn(listUsersSpy, 'listUsers').mockImplementationOnce(throwError);
+
+    const httpResponse = await sut.handle();
+
+    expect(httpResponse).toEqual(serverError(new Error()));
   });
 });
