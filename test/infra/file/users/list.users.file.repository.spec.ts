@@ -29,7 +29,9 @@ describe('ListUsersFileRepository', () => {
   });
 
   afterEach(async () => {
-    await fs.unlink(mockedUsersFile);
+    try {
+      await fs.unlink(mockedUsersFile);
+    } catch (error) {}
   });
 
   test('Should list an empty list', async () => {
@@ -51,5 +53,14 @@ describe('ListUsersFileRepository', () => {
     expect(users.length).toBe(2);
     expect(users[0]).toStrictEqual(userModels[0]);
     expect(users[1]).toStrictEqual(userModels[1]);
+  });
+
+  test('Should throw if there is no file', async () => {
+    await fs.unlink(mockedUsersFile);
+    const sut = makeSut();
+
+    const promise = sut.listUsers();
+
+    expect(promise).rejects.toThrow();
   });
 });
