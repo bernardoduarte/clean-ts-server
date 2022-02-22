@@ -1,12 +1,7 @@
 import { ListUsersFileRepository } from '@/infra/file';
 import { promises as fs } from 'fs';
-import faker from '@faker-js/faker';
-import * as path from 'path';
 import { mockListUsersOutput } from 'test/domain/mocks';
-
-const mockUsersFileEnv = () => {
-  return path.join(__dirname, faker.system.fileName());
-};
+import { mockWritableFilePath } from 'test/infra/mocks';
 
 const makeSut = () => {
   return new ListUsersFileRepository();
@@ -14,24 +9,20 @@ const makeSut = () => {
 
 describe('ListUsersFileRepository', () => {
   const backupUsersFile = process.env.USERS_FILE;
-  const mockedUsersFile = mockUsersFileEnv();
-
-  beforeAll(async () => {
-    process.env.USERS_FILE = mockedUsersFile;
-  });
-
-  afterAll(async () => {
-    process.env.USERS_FILE = backupUsersFile;
-  });
+  let mockedUsersFile: string;
 
   beforeEach(async () => {
-    await fs.open(mockedUsersFile, 'w');
+    mockedUsersFile = mockWritableFilePath();
+    process.env.USERS_FILE = mockedUsersFile;
+    const file = await fs.open(mockedUsersFile, 'w');
+    file.close();
   });
 
   afterEach(async () => {
     try {
       await fs.unlink(mockedUsersFile);
     } catch (error) {}
+    process.env.USERS_FILE = backupUsersFile;
   });
 
   test('Should list an empty list', async () => {
