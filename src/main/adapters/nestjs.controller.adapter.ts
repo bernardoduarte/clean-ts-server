@@ -1,5 +1,10 @@
 import { Controller } from '@/presentation/protocols';
-import { Controller as NestController, Res, Type } from '@nestjs/common';
+import {
+  Controller as NestController,
+  HttpException,
+  Res,
+  Type,
+} from '@nestjs/common';
 import { Response } from 'express';
 
 export function adaptController(
@@ -14,8 +19,17 @@ export function adaptController(
     @method()
     async handle(@Res() res: Response) {
       const httpResponse = await this.controller.handle();
-      if (httpResponse.statusCode >= 200 && httpResponse.statusCode <= 299) {
-        res.status(httpResponse.statusCode).json(httpResponse.body);
+      switch (httpResponse.statusCode) {
+        case 200: {
+          res.status(httpResponse.statusCode).json(httpResponse.body);
+          break;
+        }
+        case 204: {
+          res.status(httpResponse.statusCode).send();
+          break;
+        }
+        default:
+          throw new HttpException(httpResponse.body.message, 500);
       }
     }
   }
