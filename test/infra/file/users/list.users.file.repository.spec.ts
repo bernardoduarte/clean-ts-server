@@ -8,7 +8,6 @@ const makeSut = () => {
 };
 
 describe('ListUsersFileRepository', () => {
-  const backupUsersFile = process.env.USERS_FILE;
   let mockedUsersFile: string;
 
   beforeEach(async () => {
@@ -22,7 +21,6 @@ describe('ListUsersFileRepository', () => {
     try {
       await fs.unlink(mockedUsersFile);
     } catch (error) {}
-    process.env.USERS_FILE = backupUsersFile;
   });
 
   test('Should list an empty list', async () => {
