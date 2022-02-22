@@ -34,5 +34,10 @@ describe('User routes', () => {
       await FileHelper.writeJsonFile(mockedUsersFile, mockListUsersOutput());
       await request(app.getHttpServer()).get('/users').expect(200);
     });
+
+    test('Should return 204 on empty list of users', async () => {
+      await FileHelper.writeJsonFile(mockedUsersFile, []);
+      await request(app.getHttpServer()).get('/users').expect(204);
+    });
   });
 });
