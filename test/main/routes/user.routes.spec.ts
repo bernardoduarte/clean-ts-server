@@ -39,5 +39,10 @@ describe('User routes', () => {
       await FileHelper.writeJsonFile(mockedUsersFile, []);
       await request(app.getHttpServer()).get('/users').expect(204);
     });
+
+    test('Should return 500 on error', async () => {
+      await FileHelper.deleteFile(mockedUsersFile);
+      await request(app.getHttpServer()).get('/users').expect(500);
+    });
   });
 });
