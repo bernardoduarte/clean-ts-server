@@ -1,5 +1,5 @@
 import { ListUsersFileRepository } from '@/infra/file';
-import { promises as fs } from 'fs';
+import { FileHelper } from '@/infra/file/users/file-helper';
 import { mockListUsersOutput } from 'test/domain/mocks';
 import { getWritableFilePath } from 'test/infra/mocks';
 
@@ -13,18 +13,17 @@ describe('ListUsersFileRepository', () => {
   beforeEach(async () => {
     mockedUsersFile = getWritableFilePath();
     process.env.USERS_FILE = mockedUsersFile;
-    const file = await fs.open(mockedUsersFile, 'w');
-    file.close();
+    await FileHelper.createFile(mockedUsersFile);
   });
 
   afterEach(async () => {
     try {
-      await fs.unlink(mockedUsersFile);
+      await FileHelper.deleteFile(mockedUsersFile);
     } catch (error) {}
   });
 
   test('Should list an empty list', async () => {
-    await fs.writeFile(mockedUsersFile, JSON.stringify([]));
+    await FileHelper.writeJsonFile(mockedUsersFile, []);
     const sut = makeSut();
 
     const users = await sut.listUsers();
@@ -34,7 +33,7 @@ describe('ListUsersFileRepository', () => {
 
   test('Should list all users on success', async () => {
     const userModels = mockListUsersOutput();
-    await fs.writeFile(mockedUsersFile, JSON.stringify(userModels));
+    await FileHelper.writeJsonFile(mockedUsersFile, userModels);
     const sut = makeSut();
 
     const users = await sut.listUsers();
@@ -45,7 +44,7 @@ describe('ListUsersFileRepository', () => {
   });
 
   test('Should throw if there is no file', async () => {
-    await fs.unlink(mockedUsersFile);
+    await FileHelper.deleteFile(mockedUsersFile);
     const sut = makeSut();
 
     const promise = sut.listUsers();
