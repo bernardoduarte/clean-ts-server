@@ -1,7 +1,7 @@
 import { ListUsersFileRepository } from '@/infra/file';
 import { promises as fs } from 'fs';
 import { mockListUsersOutput } from 'test/domain/mocks';
-import { mockWritableFilePath } from 'test/infra/mocks';
+import { getWritableFilePath } from 'test/infra/mocks';
 
 const makeSut = () => {
   return new ListUsersFileRepository();
@@ -11,7 +11,7 @@ describe('ListUsersFileRepository', () => {
   let mockedUsersFile: string;
 
   beforeEach(async () => {
-    mockedUsersFile = mockWritableFilePath();
+    mockedUsersFile = getWritableFilePath();
     process.env.USERS_FILE = mockedUsersFile;
     const file = await fs.open(mockedUsersFile, 'w');
     file.close();
