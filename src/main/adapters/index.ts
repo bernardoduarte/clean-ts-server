@@ -1,1 +1,1 @@
-export * from './nestjs.controller.adapter';
+export * from './nest.controller.adapter';
