@@ -1,0 +1,12 @@
+{
+  "tags": [ "infra" ],
+  "exports": [
+      {
+          "modules": "file/*"
+      }
+  ],
+  "imports": [
+      "data"
+  ],
+  "dependencies": []
+}

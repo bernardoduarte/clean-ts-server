@@ -1,0 +1,24 @@
+{
+  "tags": [ "main" ],
+  "exports": [
+      {
+          "modules": "adapters/*"
+      },
+      {
+          "modules": "factories/*"
+      },
+      {
+          "modules": "module"
+      }
+  ],    
+  "imports": [
+      "domain",
+      "data",
+      "infra",
+      "presentation"
+  ],
+  "dependencies": [
+      "@nestjs/*",
+      "express"
+  ]
+}

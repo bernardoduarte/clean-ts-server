@@ -1,0 +1,13 @@
+{
+  "tags": [ "domain" ],
+  "exports": [
+      {
+          "modules": "models/*"
+      },
+      {
+          "modules": "usecases/*"
+      }
+  ],
+  "imports": [],
+  "dependencies": []
+}

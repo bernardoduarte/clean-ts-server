@@ -1,0 +1,21 @@
+{
+  "tags": [ "presentation" ],
+  "exports": [
+      {
+          "modules": "controllers/*"
+      },
+      {
+          "modules": "errors/*"
+      },
+      {
+          "modules": "helpers/*"
+      },
+      {
+          "modules": "protocols/*"
+      }
+  ],
+  "imports": [
+      "domain"
+  ],
+  "dependencies": []
+}

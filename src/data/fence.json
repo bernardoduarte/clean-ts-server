@@ -1,0 +1,15 @@
+{
+  "tags": [ "data" ],
+  "exports": [
+      {
+          "modules": "protocols/*"
+      },
+      {
+          "modules": "usecases/*"
+      }
+  ],
+  "imports": [
+      "domain"
+  ],
+  "dependencies": []
+}
