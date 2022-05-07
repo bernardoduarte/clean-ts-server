@@ -1,5 +1,4 @@
-import { ListUsersFileRepository } from '@/infra/file';
-import { FileHelper } from '@/infra/file/users/file-helper';
+import { FileHelper, ListUsersFileRepository } from '@/infra/file';
 import { mockListUsersOutput } from 'test/domain/mocks';
 import { getWritableFilePath } from 'test/infra/mocks';
 

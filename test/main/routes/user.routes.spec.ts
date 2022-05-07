@@ -3,8 +3,8 @@ import { INestApplication } from '@nestjs/common';
 import * as request from 'supertest';
 import { MainModule } from '@/main/module';
 import { getWritableFilePath } from 'test/infra/mocks';
-import { FileHelper } from '@/infra/file/users/file-helper';
 import { mockListUsersOutput } from 'test/domain/mocks';
+import { FileHelper } from '@/infra/file';
 
 describe('User routes', () => {
   let app: INestApplication;
