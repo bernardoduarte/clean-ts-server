@@ -25,7 +25,7 @@ export function adaptController(
           break;
         }
         case 204: {
-          res.status(httpResponse.statusCode).send();
+          res.status(httpResponse.statusCode).json();
           break;
         }
         default:
